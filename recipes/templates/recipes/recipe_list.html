@@ -23,9 +23,9 @@
             </div>
             <div>
                 {% if recipe.id in favorites %}
-                    <a href="{% url 'toggle_favorite' recipe.id %}" class="btn btn-outline-danger btn-sm">💔 Unfavorite</a>
+                    <a href="{% url 'toggle_favorite' recipe.id %}" class="btn btn-outline-danger btn-sm"> Unfavorite</a>
                 {% else %}
-                    <a href="{% url 'toggle_favorite' recipe.id %}" class="btn btn-outline-primary btn-sm">❤️ Favorite</a>
+                    <a href="{% url 'toggle_favorite' recipe.id %}" class="btn btn-outline-primary btn-sm"> Favorite</a>
                 {% endif %}
                 <a href="{% url 'recipe_update' recipe.id %}" class="btn btn-warning btn-sm">✏️ Edit</a>
                 <a href="{% url 'recipe_delete' recipe.id %}" class="btn btn-danger btn-sm">🗑 Delete</a>

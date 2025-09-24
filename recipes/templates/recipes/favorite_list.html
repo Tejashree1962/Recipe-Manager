@@ -7,14 +7,14 @@
 </head>
 <body class="container mt-4">
 
-    <h1 class="mb-4">❤️ My Favorite Recipes</h1>
+    <h1 class="mb-4">My Favorite Recipes</h1>
     <a href="{% url 'recipe_list' %}" class="btn btn-secondary mb-3">⬅ Back to All Recipes</a>
 
     <ul class="list-group">
         {% for recipe in recipes %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <a href="{% url 'recipe_detail' recipe.id %}" class="fw-bold">{{ recipe.title }}</a>
-            <a href="{% url 'toggle_favorite' recipe.id %}" class="btn btn-outline-danger btn-sm">💔 Remove</a>
+            <a href="{% url 'toggle_favorite' recipe.id %}" class="btn btn-outline-danger btn-sm">Remove</a>
         </li>
         {% empty %}
         <li class="list-group-item">No favorites yet. Go add some!</li>
