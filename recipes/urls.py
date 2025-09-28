@@ -8,5 +8,6 @@ urlpatterns = [
     path('recipe/<int:pk>/edit/', views.recipe_update, name='recipe_update'),
     path('recipe/<int:pk>/delete/', views.recipe_delete, name='recipe_delete'),
     path('recipe/<int:pk>/toggle_favorite/', views.toggle_favorite, name='toggle_favorite'),
-    path('favorites/', views.favorite_list, name='favorite_list'),  # 👈 NEW
+    path('favorites/', views.favorite_list, name='favorite_list'), 
+     path("register/", views.register, name="register"),
 ]
