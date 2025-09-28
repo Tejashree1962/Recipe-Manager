@@ -30,10 +30,17 @@ def recipe_detail(request, pk):
     # Check if the current user has favorited this specific recipe
     is_favorite = Favorite.objects.filter(recipe=recipe, user=request.user).exists()
     
+    # ✅ FIX: Split ingredients into a list so template can loop without `splitlines` filter
+    ingredients = recipe.ingredients.splitlines()
+
     return render(
         request,
         "recipes/recipe_detail.html",
-        {"recipe": recipe, "is_favorite": is_favorite},
+        {
+            "recipe": recipe,
+            "is_favorite": is_favorite,
+            "ingredients": ingredients,  # ✅ pass list to template
+        },
     )
 
 # 🔑 MODIFIED: Assigns the logged-in user to the new recipe upon creation.
