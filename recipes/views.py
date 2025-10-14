@@ -1,34 +1,33 @@
-# recipes/views.py
-
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Recipe, Favorite
+# ❌ MODIFIED: Removed Favorite from imports
+from .models import Recipe 
 from .forms import RecipeForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 
-# 🔑 MODIFIED: Only fetches recipes created by the current user.
+# ❌ MODIFIED: Removed all favorites logic
 @login_required 
 def recipe_list(request):
     # Filter Recipe objects to only include those belonging to the logged-in user
     recipes = Recipe.objects.filter(user=request.user)
     
-    # Filter Favorite objects to only include those belonging to the logged-in user
-    favorites = Favorite.objects.filter(user=request.user).values_list("recipe_id", flat=True)
+    # ❌ REMOVED: Filter Favorite objects logic
+    # favorites = Favorite.objects.filter(user=request.user).values_list("recipe_id", flat=True)
     
     return render(
         request,
         "recipes/recipe_list.html",
-        {"recipes": recipes, "favorites": favorites},
+        {"recipes": recipes}, # ❌ MODIFIED: Removed "favorites" from context
     )
 
-# 🔑 MODIFIED: Only checks if the CURRENT user has favorited this recipe.
+# ❌ MODIFIED: Removed all favorites logic
 @login_required 
 def recipe_detail(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     
-    # Check if the current user has favorited this specific recipe
-    is_favorite = Favorite.objects.filter(recipe=recipe, user=request.user).exists()
+    # ❌ REMOVED: Favorite check logic
+    # is_favorite = Favorite.objects.filter(recipe=recipe, user=request.user).exists()
     
     # ✅ FIX: Split ingredients into a list so template can loop without `splitlines` filter
     ingredients = recipe.ingredients.splitlines()
@@ -38,12 +37,11 @@ def recipe_detail(request, pk):
         "recipes/recipe_detail.html",
         {
             "recipe": recipe,
-            "is_favorite": is_favorite,
-            "ingredients": ingredients,  # ✅ pass list to template
+            # ❌ REMOVED: "is_favorite" from context
+            "ingredients": ingredients, 
         },
     )
 
-# 🔑 MODIFIED: Assigns the logged-in user to the new recipe upon creation.
 @login_required
 def recipe_create(request):
     if request.method == "POST":
@@ -83,29 +81,25 @@ def recipe_delete(request, pk):
     recipe.delete()
     return redirect("recipe_list")
 
-# 🔑 MODIFIED: Links the favorite action to the specific user.
-@login_required
-def toggle_favorite(request, pk):
-    recipe = get_object_or_404(Recipe, pk=pk)
-    
-    # Get or create the Favorite instance linked to THIS recipe and THIS user
-    fav, created = Favorite.objects.get_or_create(recipe=recipe, user=request.user)
-    
-    if not created:
-        fav.delete()
-    return redirect("recipe_list")
+# ❌ REMOVED: toggle_favorite view function
+# @login_required
+# def toggle_favorite(request, pk):
+#     recipe = get_object_or_404(Recipe, pk=pk)
+#     fav, created = Favorite.objects.get_or_create(recipe=recipe, user=request.user)
+#     if not created:
+#         fav.delete()
+#     return redirect("recipe_list")
 
-# 🔑 MODIFIED: Only lists favorite recipes for the current user.
-@login_required
-def favorite_list(request):
-    # Filter favorites to only include those belonging to the logged-in user
-    favorites = Favorite.objects.filter(user=request.user).select_related("recipe")
-    recipes = [fav.recipe for fav in favorites]
-    return render(
-        request,
-        "recipes/favorite_list.html",
-        {"recipes": recipes},
-    )
+# ❌ REMOVED: favorite_list view function
+# @login_required
+# def favorite_list(request):
+#     favorites = Favorite.objects.filter(user=request.user).select_related("recipe")
+#     recipes = [fav.recipe for fav in favorites]
+#     return render(
+#         request,
+#         "recipes/favorite_list.html",
+#         {"recipes": recipes},
+#     )
 
 # User Registration (No change needed here)
 def register(request):

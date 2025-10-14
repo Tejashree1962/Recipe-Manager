@@ -51,7 +51,7 @@
                 {% if user.is_authenticated %}
                     <span class="navbar-text me-3">👋 {{ user.username }}</span>
                     
-                    <a href="{% url 'favorite_list' %}" class="btn btn-sm btn-outline-danger me-2">⭐ Favorites</a>
+                    {# ❌ The Favorites link from the navbar was already correctly commented out. #}
                     
                     <form method="post" action="{% url 'logout' %}" style="display: inline;">
                         {% csrf_token %}
@@ -98,11 +98,7 @@
                         <td>
                             {% if user.is_authenticated %}
                                 
-                                {% if recipe.id in favorites %}
-                                    <a href="{% url 'toggle_favorite' recipe.id %}" class="btn btn-sm btn-danger me-2">⭐ Unfavorite</a>
-                                {% else %}
-                                    <a href="{% url 'toggle_favorite' recipe.id %}" class="btn btn-sm btn-outline-warning me-2">⭐ Favorite</a>
-                                {% endif %}
+                                {# ✅ CORRECTED: Deleted the old favorites button logic completely #}
                                 
                                 <a href="{% url 'recipe_update' recipe.id %}" class="btn btn-sm btn-info me-2">✏️ Edit</a>
                                 

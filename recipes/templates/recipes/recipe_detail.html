@@ -77,11 +77,12 @@
             </div>
 
             <div class="mt-4 d-flex gap-2">
-                {% if is_favorite %}
+                {# ❌ REMOVED: Favorite/Unfavorite button logic #}
+                {# {% if is_favorite %}
                     <a href="{% url 'toggle_favorite' recipe.id %}" class="btn btn-danger">⭐ Remove from Favorites</a>
                 {% else %}
                     <a href="{% url 'toggle_favorite' recipe.id %}" class="btn btn-success">⭐ Add to Favorites</a>
-                {% endif %}
+                {% endif %} #}
                 <a href="{% url 'recipe_update' recipe.id %}" class="btn btn-warning">✏️ Edit</a>
                 <a href="{% url 'recipe_list' %}" class="btn btn-secondary">⬅ Back to List</a>
             </div>
@@ -90,4 +91,3 @@
 
 </body>
 </html>
-```
